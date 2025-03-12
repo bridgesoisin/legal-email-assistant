@@ -118,4 +118,4 @@ if email_text:
             prompt = build_prompt(email_text, tone_instruction, context_snippet)
             response = get_llm_response(prompt)
         st.markdown("### 📄 Drafted Email Response")
-        st.text_area("Generated Email", response, height=
+        st.text_area("Generated Email", response, height=500)
