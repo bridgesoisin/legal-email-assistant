@@ -135,7 +135,7 @@ if st.session_state.submitted:
     signature = st.text_area("✍️ Add Your Signature (optional)", placeholder="e.g., Kind regards,\nJohn Smith\nSenior Solicitor")
 
     if st.button("🧠 Generate Draft Reply"):
-        with st.spinner("🤖 Generating response..."):
+        with st.spinner("✍️ Generating response..."):
             tone_instruction = response_tones[tone_choice]
             prompt = build_prompt(st.session_state.email_text, tone_instruction, context_snippet, signature)
             response = get_llm_response(prompt)
