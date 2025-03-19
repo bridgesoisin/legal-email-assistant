@@ -56,7 +56,7 @@ Client Email:
 {email_text}
 \"\"\"
 
-Respond with the top 3 tones in a bullet-point list (no numbering) along with a short clear brief reason for each choice.
+Respond with the top 3 tones in a bullet-point list (no numbering) along with a brief reason for each choice.
 """
     response = client.chat.completions.create(
         model="gpt-3.5-turbo",
@@ -66,7 +66,7 @@ Respond with the top 3 tones in a bullet-point list (no numbering) along with a 
     return response.choices[0].message.content.strip()
 
 # ✍️ Prompt Builder
-def build_prompt(email_body, tone_instruction, context_snippet=""):
+def build_prompt(email_body, tone_instruction, context_snippet="", signature=""):
     prompt = f"""
 You are a legal assistant responding to a client's email at a law firm.
 
@@ -101,8 +101,6 @@ def get_llm_response(prompt):
 # ============================
 # 🌐 Streamlit App Starts Here
 # ============================
-st.title("📬 Legal Email Draft Assistant")
-st.markdown("Generate professional email responses using AI, tailored for legal firms.")
 
 # 🔄 Session State Defaults
 if "email_text" not in st.session_state:
@@ -112,26 +110,28 @@ if "suggestions" not in st.session_state:
 if "submitted" not in st.session_state:
     st.session_state.submitted = False
 
-email_text = st.text_area("📥 Paste Client Email",value=st.session_state.email_text, height=300)
+st.title("📬 Legal Email Draft Assistant")
+st.markdown("Generate professional email responses using AI, tailored for legal firms.")
 
-if st.button("Submit"):
+# 📥 Email Input
+email_text = st.text_area("📥 Paste Client Email", value=st.session_state.email_text, height=500)
+
+if st.button("✅ Submit Email for Analysis"):
     st.session_state.email_text = email_text
     st.session_state.suggestions = suggest_tones_from_email(email_text)
     st.session_state.submitted = True
 
 # 📊 Show Analysis and Tone Selector After Submit
 if st.session_state.submitted:
-    with st.spinner("🔍 Analyzing email content for tone suggestions..."):
-        suggestions = suggest_tones_from_email(email_text)
-        
     st.markdown("### 💡 Suggested Response Tones")
-    st.markdown(suggestions)
+    st.markdown(st.session_state.suggestions)
 
     st.markdown("### ✨ Select Response Tone")
     tone_choice = st.selectbox("Choose a tone for the reply", list(response_tones.keys()))
-    context_snippet = st.text_area("📎 Add Case Notes (optional)", placeholder="e.g., lease renewal case, deadline 30th April")
-    signature = st.text_area("✍️ Add Your Signature (optional)", placeholder="e.g., Kind regards,\nJohn Smith\nSenior Solicitor")
 
+    context_snippet = st.text_area("📎 Add Case Notes (optional)", placeholder="e.g., lease renewal case, deadline 30th April")
+
+    signature = st.text_area("✍️ Add Your Signature (optional)", placeholder="e.g., Kind regards,\nJohn Smith\nSenior Solicitor")
 
     if st.button("🧠 Generate Draft Reply"):
         with st.spinner("Generating response..."):
@@ -140,3 +140,4 @@ if st.session_state.submitted:
             response = get_llm_response(prompt)
         st.markdown("### 📄 Drafted Email Response")
         st.text_area("Generated Email", response, height=500)
+
