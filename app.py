@@ -117,7 +117,7 @@ st.markdown("Generate professional email responses using AI, tailored for legal 
 email_text = st.text_area("📥 Paste Client Email", value=st.session_state.email_text, height=500)
 
 if st.button("Submit"):
-with st.spinner("🔍 Analyzing email content for tone suggestions..."):
+    with st.spinner("🔍 Analyzing email content for tone suggestions..."):
     st.session_state.email_text = email_text
     st.session_state.suggestions = suggest_tones_from_email(email_text)
     st.session_state.submitted = True
