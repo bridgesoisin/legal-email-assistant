@@ -56,7 +56,7 @@ Client Email:
 {email_text}
 \"\"\"
 
-Respond with the top 3 tones in a bullet-point list (no numbering) along with a brief reason for each choice.
+Respond with the top 3 tones in Bold in a bullet-point list (no numbering) along with a brief reason for each choice in italics.
 """
     response = client.chat.completions.create(
         model="gpt-3.5-turbo",
