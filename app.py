@@ -118,9 +118,9 @@ email_text = st.text_area("📥 Paste Client Email", value=st.session_state.emai
 
 if st.button("Submit"):
     with st.spinner("🔍 Analyzing email content for tone suggestions..."):
-    st.session_state.email_text = email_text
-    st.session_state.suggestions = suggest_tones_from_email(email_text)
-    st.session_state.submitted = True
+        st.session_state.email_text = email_text
+        st.session_state.suggestions = suggest_tones_from_email(email_text)
+        st.session_state.submitted = True
 
 # 📊 Show Analysis and Tone Selector After Submit
 if st.session_state.submitted:
