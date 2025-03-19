@@ -123,8 +123,8 @@ if st.button("Submit"):
 
 # 📊 Show Analysis and Tone Selector After Submit
 if st.session_state.submitted:
-    with st.spinner("🔍 Analyzing email content for tone suggestions..."):
-        suggestions = suggest_tones_from_email(email_text)
+    #with st.spinner("🔍 Analyzing email content for tone suggestions..."):
+    #    suggestions = suggest_tones_from_email(email_text)
     st.markdown("### 💡 Suggested Response Tones")
     st.markdown(st.session_state.suggestions)
 
